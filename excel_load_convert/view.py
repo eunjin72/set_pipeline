@@ -2,14 +2,13 @@ from PySide2.QtWidgets import *
 from PySide2.QtGui import *
 
 
-class LoadConvertView(QMainWindow):
+class LoadConvertView(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Excel Converter')
 
-        widget = QWidget()
         layout = QVBoxLayout()
-        widget.setLayout(layout)
+        self.setLayout(layout)
 
         browse_line_layout = QHBoxLayout()
 
@@ -40,8 +39,6 @@ class LoadConvertView(QMainWindow):
         button_layout.addWidget(self.cancel_button)
 
         layout.addLayout(button_layout)
-
-        self.setCentralWidget(widget)
 
         self.center_on_screen()
 
