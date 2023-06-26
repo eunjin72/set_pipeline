@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>ShotGrid Publish</string>
+   <string>IO Manageer</string>
   </property>
   <property name="accessibleName">
    <string>publish dialog</string>
@@ -29,7 +29,7 @@
       <string>stackedwidget</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="main">
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -126,13 +126,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="browse_button">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
+              <widget class="QToolButton" name="browse_button">
                <property name="text">
                 <string>Browse</string>
                </property>
@@ -196,7 +190,7 @@
             <widget class="QLineEdit" name="line_dir_path"/>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_browse">
+            <widget class="QToolButton" name="btn_browse">
              <property name="text">
               <string>Browse</string>
              </property>
@@ -251,7 +245,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../../../TD/dongjin/projects/configs/install/app_store/tk-multi-publish2/v2.6.4/resources/resources.qrc"/>
+  <include location="resources.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -22,6 +22,7 @@ from sgtk.platform.qt import QtCore, QtGui
 
 from .api import ExcelCreate
 # from .api import LoadConvertModel
+
 from .ui.dialog import Ui_Dialog
 
 # standard toolkit logger
@@ -38,7 +39,7 @@ def show_dialog(app_instance):
 
     # we pass the dialog class to this method and leave the actual construction
     # to be carried out by toolkit.
-    app_instance.engine.show_dialog("Starter Template App...", app_instance, AppDialog)
+    app_instance.engine.show_dialog("IO Manager", app_instance, AppDialog)
 
 
 class AppDialog(QtGui.QWidget):
@@ -56,6 +57,7 @@ class AppDialog(QtGui.QWidget):
         # now load in the UI that was created in the UI designer
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
+        self.ui.main_stack.setCurrentIndex(0)
 
         self.api_1 = ExcelCreate()
         # self.api_2 = LoadConvertModel()
@@ -72,34 +74,22 @@ class AppDialog(QtGui.QWidget):
         # - A Shotgun API instance, via self._app.shotgun
         # - An Sgtk API instance, via self._app.sgtk
 
-        # lastly, set up our very basic UI
-        # self.ui.context.setText("Current Context: %s" % self._app.context)
-
         # excel_create
         self.ui.ui1_button_2.clicked.connect(self.create_excel)
-        # self.ui.btn_browse.clicked.connect(self.btn_browse_clicked)
-        # self.ui.btn_clear.clicked.connect(self.btn_clear_clicked)
+
+        self.ui.btn_browse.clicked.connect(self.btn_browse_clicked)
+        self.ui.btn_clear.clicked.connect(self.btn_clear_clicked)
         # self.ui.btn_create.clicked.connect(self.btn_create_clicked)
         # self.ui.btn_create.clicked.connect(self.save_folder_open)
         self.ui.btn_cancel.clicked.connect(self.btn_cancel_clicked)
 
-        #test
-        self.ui.btn_create.clicked.connect(self.btn_test)
-
         # convert
         self.ui.ui2_button_2.clicked.connect(self.convert)
 
-        # for project in self.api_2.all_project:
-        #     self.ui.combo_box.addItem(project)
-        #
-        # self.selected_xlsx = ''
-        # self.selected_project = ''
-        #
         # self.ui.combo_box.currentIndexChanged.connect(self.combo_box_changed)
-        # self.ui.browse_button.clicked.connect(self.browse_clicked)
+        self.ui.browse_button.clicked.connect(self.browse_clicked)
         # self.ui.ok_button.clicked.connect(self.ok_clicked)
         self.ui.cancel_button.clicked.connect(self.btn_cancel_clicked)
-
 
     def create_excel(self):
         self.ui.main_stack.setCurrentIndex(2)
@@ -107,15 +97,15 @@ class AppDialog(QtGui.QWidget):
     def convert(self):
         self.ui.main_stack.setCurrentIndex(1)
 
-    # def btn_browse_clicked(self):
-    #     dialog = QFileDialog()
-    #     dialog.setDirectory('/TD/show')
-    #     dir_path = dialog.getExistingDirectory()
-    #     self.line_dir_path.setText(dir_path)
-    #     self.api_1.input_path = dir_path
+    ## create excel ##
+    def btn_browse_clicked(self):
+        dialog = QtGui.QFileDialog()
+        dialog.setDirectory('/TD/show')
+        dir_path = dialog.getExistingDirectory()
+        self.ui.line_dir_path.setText(dir_path)
 
-    # def btn_clear_clicked(self):
-    #     self.line_dir_path.clear()
+    def btn_clear_clicked(self):
+        self.ui.line_dir_path.clear()
 
     # def btn_create_clicked(self):
     #     self.api_1.excel_create()
@@ -129,22 +119,20 @@ class AppDialog(QtGui.QWidget):
     def btn_cancel_clicked(self):
         self.ui.main_stack.setCurrentIndex(0)
 
-    def btn_test(self):
-        self.api_1.test()
-
-    ## convert ##
+    ## convert & upload ##
     # def combo_box_changed(self):
     #     self.selected_project = self.view.combo_box.currentText()
     #     self.view.label.setText(f'Converting Project: {self.selected_project}')
     #     print(f'selected project: {self.selected_project}')
-    #
-    # def browse_clicked(self):
-    #     dialog = BrowseDialog()
-    #     self.selected_xlsx = dialog.file_name
-    #     self.view.line_edit.setText(self.selected_xlsx)
-    #     self.model.set_file_path(self.selected_xlsx)
-    #     print(f'selected xlsx file: {self.selected_xlsx}')
-    #
+
+    def browse_clicked(self):
+        dialog = QtGui.QFileDialog()
+        dialog.setDirectory('/TD/show')
+        file_name = dialog.getOpenFileName(self,
+                                                 "Select File",
+                                                 filter="Excel Files (*.xlsx);;CSV Files (*.csv)")
+        self.ui.line_edit.setText(file_name[0])
+
     # def ok_clicked(self):
     #     if not self.model.file_path:
     #         self.view.message_box('Choose the xlsx file')
@@ -170,7 +158,4 @@ class AppDialog(QtGui.QWidget):
     #     self.view.line_edit.setText('')
     #     self.selected_xlsx = ''
     #     self.model.file_path = ''
-    #
-    # def cancel_clicked(self):
-    #     self.view.close()
 

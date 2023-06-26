@@ -126,7 +126,7 @@ class ExcelCreate:
     def execl_form(self):
         header_list = [
             'check', 'thumbnail', 'roll', 'seq_name', 'shot_name', 'version', 'type',
-            'scan_path', 'scan_name', 'clip_name', 'pad', 'ext', 'resoultion',
+            'scan_path', 'scan_name', 'clip_name', 'pad', 'ext', 'resolution',
             'start_frame', 'end_frame', 'duration', 'retime_duration', 'retime_percent', 'retime_start_frame',
             'timecode_in', 'timecode_out', 'just_in', 'just_out', 'framerate', 'date', 'clip_tag'
         ]
@@ -162,7 +162,7 @@ class ExcelCreate:
         self.excel_save()
 
     def excel_save(self):
-        self.excel_path = os.path.join(self.project_path[0], 'production/excel')
+        self.excel_path = os.path.join(self.project_path[0], 'production/excel/shots_list')
 
         file_name = f'{self.project_path[1]}.xlsx'
         save_dir_path = os.path.join(self.excel_path, file_name)
